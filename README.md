@@ -1,6 +1,10 @@
-# Morse Decoder
+# School Library
 
-> Implemented in this repository a morse code dictionary, and a function to encode and decode messages collected from the terminal
+# Class diagram for OOP school library
+![image](https://user-images.githubusercontent.com/87186552/161608021-7515a03e-f27a-4a5d-a722-3b9e415c10d2.png)
+
+> General information
+This is project made with Ruby, with a basic UI(command line). User can create Person(teacher and student) and rent books from library.
 
 ## Built With
 
@@ -10,8 +14,8 @@
 To get a local copy up and running follow these simple steps.
 
 ```bash
-$ git@github.com:clintonjosephs/morse-decoder.git
-$ cd morse-decoder
+$ https://github.com/Anny85-code/school-library.git
+$ cd school-library
 ```
 
 # Installation
@@ -22,12 +26,6 @@ bundle install
 ```
 
 ## Authors
-
-👤 **Clinton Mbonu**
-
-- GitHub: [@clintonjosephs](https://github.com/clintonjosephs)
-- LinkedIn: [LinkedIn](https://linkedin.com/in/clinton-mbonu)
-- Twitter: [@clintonmbonu2](https://twitter.com/clintonmbonu2)
 
 👤 **Aniekan udo**
 
@@ -55,3 +53,7 @@ Give a ⭐️ if you like this project!
 ## 📝 License
 
 This project is [MIT](./MIT.md) licensed.
+Contact
+Created by @Anny85-code
+
+
