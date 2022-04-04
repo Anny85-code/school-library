@@ -29,5 +29,3 @@ attr_writer :name
 attr_reader :age
 attr_writer :age
 end
-
-
