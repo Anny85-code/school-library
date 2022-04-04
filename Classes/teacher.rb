@@ -2,8 +2,9 @@ require './person'
 
 class Teacher < Person
   attr_accessor :specialization
-  def initialize(name = "Unknown", age, parent_permission: true, specialization: true)
-    super(name, age, parent_permission: true)
+
+  def initialize(age, name = 'Unknown', specialization: true)
+    super(name, age)
     @specialization = specialization
   end
 
@@ -11,5 +12,3 @@ class Teacher < Person
     true
   end
 end
-
-
