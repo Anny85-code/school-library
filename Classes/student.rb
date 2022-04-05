@@ -13,3 +13,4 @@ class Student < Person
     "¯\(ツ)/¯"
   end
 end
+
