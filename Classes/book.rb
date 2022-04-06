@@ -1,18 +1,18 @@
-require './rental.rb'
+require './rental'
 require 'date'
 
 class Book
- attr_accessor :title, :author
- attr_reader :rentals
- 
- def initialize(title, author)
-  @title = title
-  @author = author
-  @date = DateTime.now
-  @rentals = []
- end
+  attr_accessor :title, :author
+  attr_reader :rentals
 
- def add_rental= (person)
-  Rental.new(@date, person, self)
- end
+  def initialize(title, author)
+    @title = title
+    @author = author
+    @date = DateTime.now
+    @rentals = []
+  end
+
+  def add_rental=(person)
+    Rental.new(@date, person, self)
+  end
 end
