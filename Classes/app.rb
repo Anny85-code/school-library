@@ -75,3 +75,14 @@ def create_person
     puts 'Database is empty! Add a person.' if @people.empty?
     @people.each { |person| puts "[#{person.class.name}] Name: #{person.name}, Age: #{person.age}, id: #{person.id}" }
   end
+
+  def create_book()
+    puts 'Create a new book'
+    print 'Enter title: '
+    title = gets.chomp
+    puts 'Enter author: '
+    author = gets
+    book = Book.new(title, author)
+    @books.push(book)
+    puts "Book #{title} created successfully."
+  end
