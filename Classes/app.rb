@@ -66,14 +66,17 @@ class App
     specialization = gets.chomp
     print 'Enter teacher name: '
     name = gets.chomp
-    teacher = Teacher.new(age, specialization, name )
+    teacher = Teacher.new(age, specialization, name)
     @people << teacher
     puts 'Teacher created successfully'
   end
 
   def list_all_people
     puts 'Database is empty! Add a person.' if @people.empty?
-    @people.each { |person| puts "[#{person.class.name}] Age: #{person.name}, Specialization: #{person.specialization}, Name: #{person.age} id: #{person.id}" }
+    @people.each do |person|
+      puts "[#{person.class.name}] Age: #{person.age}, Name: #{person.name}
+      id: #{person.id}"
+    end
   end
 
   def create_book()
@@ -116,11 +119,11 @@ class App
 
   def list_all_rentals
     print 'To see person rentals enter the person ID: '
-    id = gets.chomp.to_i
+    id = gets.chomp
 
     puts 'Rented Books:'
     @rentals.each do |rental|
-      puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}" if rental.person.id == id
+      puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}" if rental.person.name == id
     end
   end
 end
