@@ -62,18 +62,18 @@ class App
     puts 'Create a new teacher'
     print 'Enter teacher age: '
     age = gets.chomp.to_i
-    print 'Enter teacher name: '
-    name = gets.chomp
     print 'Enter teacher specialization: '
     specialization = gets.chomp
-    teacher = Teacher.new(age, name, specialization)
+    print 'Enter teacher name: '
+    name = gets.chomp
+    teacher = Teacher.new(age, specialization, name )
     @people << teacher
     puts 'Teacher created successfully'
   end
 
   def list_all_people
     puts 'Database is empty! Add a person.' if @people.empty?
-    @people.each { |person| puts "[#{person.class.name}] Name: #{person.name}, Age: #{person.age}, id: #{person.id}" }
+    @people.each { |person| puts "[#{person.class.name}] Age: #{person.name}, Specialization: #{person.specialization}, Name: #{person.age} id: #{person.id}" }
   end
 
   def create_book()
