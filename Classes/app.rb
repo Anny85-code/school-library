@@ -23,9 +23,9 @@ class App
 
       option input
     end
-end
+  end
 
-def create_person
+  def create_person
     print 'To create a student, press 1, to create a teacher, press 2 : '
     option = gets.chomp
 
