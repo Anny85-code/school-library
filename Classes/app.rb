@@ -70,3 +70,8 @@ def create_person
     @people << teacher
     puts 'Teacher created successfully'
   end
+
+  def list_all_people
+    puts 'Database is empty! Add a person.' if @people.empty?
+    @people.each { |person| puts "[#{person.class.name}] Name: #{person.name}, Age: #{person.age}, id: #{person.id}" }
+  end
