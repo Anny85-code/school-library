@@ -113,3 +113,14 @@ def create_person
 
     puts 'Rental created successfully'
   end
+
+  def list_all_rentals
+    print 'To see person rentals enter the person ID: '
+    id = gets.chomp.to_i
+
+    puts 'Rented Books:'
+    @rentals.each do |rental|
+      puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}" if rental.person.id == id
+    end
+  end
+end
