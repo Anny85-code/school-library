@@ -1,5 +1,5 @@
-require './nameable'
-require './rental'
+require_relative 'nameable'
+require_relative 'rental'
 require 'date'
 
 class Person < Nameable
