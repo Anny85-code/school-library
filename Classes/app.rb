@@ -11,23 +11,21 @@ class App
     @books = []
     @people = []
     @rentals = []
-    @command_options = []
-  end
-
-  def initialize_command_options
     @command_options = CommandOption.new.options
   end
+
+  # def initialize_command_options
+  #  @command_options = CommandOption.new.options
+  # end
 
 def list_of_options
   puts
   puts 'Choose an option by entering a number: '
-  puts '1 - List all books'
-  puts '2 - List all people'
-  puts '3 - Create a person'
-  puts '4 - Create a book'
-  puts '5 - Create a rental'
-  puts '6 - List all rentals for a given person id'
-  puts '7 - Exit'
+
+  @command_options.each_with_index { |option, index| puts "#{index + 1} - #{option[0].capitalize}" }
+
+  puts "#{@command_options.length + 1} - Exit"
+
 end
 
   def option(input)
@@ -119,7 +117,7 @@ end
     end
   end
 
-  def create_book()
+  def create_book
     puts 'Create a new book'
     print 'Enter title: '
     title = gets.chomp
