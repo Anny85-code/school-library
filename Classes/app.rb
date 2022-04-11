@@ -4,23 +4,41 @@ require_relative 'book'
 require_relative 'classroom'
 require_relative 'teacher'
 require_relative 'rental'
+require_relative 'command_option'
 
 class App
+  attr_accessor :command_options
+
   def initialize
     @books = []
     @people = []
     @rentals = []
+    @command_options = CommandOption.new.options
+  end
+
+  def list_of_options
+    puts
+    puts 'Choose an option by entering a number: '
+    @command_options.each_with_index { |option, index| puts "#{index + 1} - #{option[0].capitalize}" }
+
+    puts "#{@command_options.length + 1} - Exit"
+  end
+
+  def option(input)
+    if input.to_i >= 1 && input.to_i <= @command_options.length
+      send(@command_options[input.to_i - 1][1])
+    elsif input.to_i == @command_options.length + 1
+      puts 'Thank You for using my School Library!'
+      exit
+    else
+      puts "Please enter a number between 1 and #{@command_options.length + 1}."
+    end
   end
 
   def console_entry_point
     puts 'Welcome to my School Library!'
     until list_of_options
       input = gets.chomp
-      if input == '7'
-        puts 'Thank You for using my School Library!'
-        break
-      end
-
       option input
     end
   end
@@ -79,7 +97,7 @@ class App
     end
   end
 
-  def create_book()
+  def create_book
     puts 'Create a new book'
     print 'Enter title: '
     title = gets.chomp
