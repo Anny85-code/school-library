@@ -7,6 +7,8 @@ require_relative 'rental'
 require_relative 'command_option'
 
 class App
+  attr_accessor :command_options
+
   def initialize
     @books = []
     @people = []
@@ -14,51 +16,29 @@ class App
     @command_options = CommandOption.new.options
   end
 
-  # def initialize_command_options
-  #  @command_options = CommandOption.new.options
-  # end
+  def list_of_options
+    puts
+    puts 'Choose an option by entering a number: '
+    @command_options.each_with_index { |option, index| puts "#{index + 1} - #{option[0].capitalize}" }
 
-def list_of_options
-  puts
-  puts 'Choose an option by entering a number: '
-
-  @command_options.each_with_index { |option, index| puts "#{index + 1} - #{option[0].capitalize}" }
-
-  puts "#{@command_options.length + 1} - Exit"
-
-end
+    puts "#{@command_options.length + 1} - Exit"
+  end
 
   def option(input)
-  case input
-  when '1'
-    list_all_books
-  when '2'
-    list_all_people
-  when '3'
-    create_person
-  when '4'
-    create_book
-  when '5'
-    create_rental
-  when '6'
-    list_all_rentals
-  when '7'
-    puts "Thank You for using my School Library!"
-    exit
-  else
-    puts 'Please enter a number between 1 and 7.'
+    if input.to_i >= 1 && input.to_i <= @command_options.length
+      send(@command_options[input.to_i - 1][1])
+    elsif input.to_i == @command_options.length + 1
+      puts 'Thank You for using my School Library!'
+      exit
+    else
+      puts "Please enter a number between 1 and #{@command_options.length + 1}."
+    end
   end
-end
 
   def console_entry_point
     puts 'Welcome to my School Library!'
     until list_of_options
       input = gets.chomp
-      # if input == ''
-      #   puts 'Thank You for using my School Library!'
-      #   break
-      # end
-
       option input
     end
   end
