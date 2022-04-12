@@ -5,8 +5,10 @@ require_relative 'classroom'
 require_relative 'teacher'
 require_relative 'rental'
 require_relative 'command_option'
+require_relative 'console_ui'
 
 class App
+  include ConsoleUI
   attr_accessor :command_options
 
   def initialize
@@ -44,36 +46,25 @@ class App
   end
 
   def create_person
-    print 'To create a student, press 1, to create a teacher, press 2 : '
-    option = gets.chomp
-
-    print 'Enter age: '
-    age = gets.chomp.to_i
-    print 'Enter name: '
-    name = gets.chomp
-
-    case option
-    when '1'
-      create_student(age, name)
-    when '2'
-      create_teacher(age, name)
+    person_data = get_person_input_data
+    puts person_data
+    case person_data[:option]
+    when 1
+      create_student( person_data[:age],  person_data[:name], person_data[:permission])
+    when 2
+      create_teacher( person_data[:age],  person_data[:name], person_data[:specialization])
     else
       puts 'Invalid input. Try again'
     end
   end
 
-  def create_student(age, name)
-    print 'Has parent permission? [Y/N]: '
-    parent_permission = gets.chomp.downcase
-    permission = parent_permission == 'y'
+  def create_student(age, name, permission)
     student = Student.new(age, name, parent_permission: permission)
     @people << student
     puts 'Student created successfully'
   end
 
-  def create_teacher(age, name)
-    print 'Enter teacher specialization: '
-    specialization = gets.chomp
+  def create_teacher(age, name, specialization)
     teacher = Teacher.new(age, name, specialization)
     @people << teacher
     puts 'Teacher created successfully'
