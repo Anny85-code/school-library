@@ -1,7 +1,6 @@
 module ConsoleUI
   def person_input_data
-    permission = true
-    specialization = ''
+    permission = true, specialization = ''
     print 'To create a student, press 1, to create a teacher, press 2 : '
     option = gets.chomp.to_i
     print 'Enter age: '
