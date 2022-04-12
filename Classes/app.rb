@@ -46,13 +46,12 @@ class App
   end
 
   def create_person
-    person_data = get_person_input_data
-    puts person_data
+    person_data = person_input_data
     case person_data[:option]
     when 1
-      create_student( person_data[:age],  person_data[:name], person_data[:permission])
+      create_student(person_data[:age], person_data[:name], person_data[:permission])
     when 2
-      create_teacher( person_data[:age],  person_data[:name], person_data[:specialization])
+      create_teacher(person_data[:age], person_data[:name], person_data[:specialization])
     else
       puts 'Invalid input. Try again'
     end
@@ -79,14 +78,10 @@ class App
   end
 
   def create_book
-    puts 'Create a new book'
-    print 'Enter title: '
-    title = gets.chomp
-    puts 'Enter author: '
-    author = gets
-    book = Book.new(title, author)
+    book_data = book_input_data
+    book = Book.new(book_data[:title], book_data[:author])
     @books.push(book)
-    puts "Book #{title} created successfully."
+    puts "Book \"#{book.title}\" created successfully."
   end
 
   def list_all_books
@@ -95,22 +90,12 @@ class App
   end
 
   def create_rental
-    puts 'Select which book you want to rent by entering its number'
-    @books.each_with_index { |book, index| puts "#{index}) Title: #{book.title}, Author: #{book.author}" }
-
-    book_id = gets.chomp.to_i
-
-    puts 'Select a person from the list by its number'
-    @people.each_with_index do |person, index|
-      puts "#{index}) [#{person.class.name}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
-    end
-
-    person_id = gets.chomp.to_i
-
-    print 'Date: '
-    date = gets.chomp.to_s
-
-    rental = Rental.new(date, @people[person_id], @books[book_id])
+    rental_data = rental_input_data(@books, @people)
+    rental = Rental.new(
+      rental_data[:date],
+      @people[rental_data[:person_id]],
+      @books[rental_data[:book_id]]
+    )
     @rentals << rental
 
     puts 'Rental created successfully'
