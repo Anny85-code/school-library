@@ -31,4 +31,22 @@ module ConsoleUI
     author = gets
     { title: title, author: author }
   end
+
+  def rental_input_data(books, people)
+    puts 'Select which book you want to rent by entering its number'
+    books.each_with_index { |book, index| puts "#{index}) Title: #{book.title}, Author: #{book.author}" }
+
+    book_id = gets.chomp.to_i
+
+    puts 'Select a person from the list by its number'
+    people.each_with_index do |person, index|
+      puts "#{index}) [#{person.class.name}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+    end
+
+    person_id = gets.chomp.to_i
+
+    print 'Date: '
+    date = gets.chomp.to_s
+    { date: date, book_id: book_id, person_id: person_id }
+  end
 end
