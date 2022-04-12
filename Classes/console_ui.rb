@@ -1,7 +1,5 @@
 module ConsoleUI
-  
-
-  def get_person_input_data
+  def person_input_data
     permission = true
     specialization = ''
     print 'To create a student, press 1, to create a teacher, press 2 : '
@@ -22,6 +20,15 @@ module ConsoleUI
     else
       puts 'Invalid input. Try again'
     end
-    {:option => option, :age => age, :name => name, :permission => permission, :specialization => specialization}
+    { option: option, age: age, name: name, permission: permission, specialization: specialization }
+  end
+
+  def book_input_data
+    puts 'Create a new book'
+    print 'Enter title: '
+    title = gets.chomp
+    puts 'Enter author: '
+    author = gets
+    { title: title, author: author }
   end
 end

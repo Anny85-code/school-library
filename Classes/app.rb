@@ -46,13 +46,12 @@ class App
   end
 
   def create_person
-    person_data = get_person_input_data
-    puts person_data
+    person_data = person_input_data
     case person_data[:option]
     when 1
-      create_student( person_data[:age],  person_data[:name], person_data[:permission])
+      create_student(person_data[:age], person_data[:name], person_data[:permission])
     when 2
-      create_teacher( person_data[:age],  person_data[:name], person_data[:specialization])
+      create_teacher(person_data[:age], person_data[:name], person_data[:specialization])
     else
       puts 'Invalid input. Try again'
     end
@@ -79,14 +78,10 @@ class App
   end
 
   def create_book
-    puts 'Create a new book'
-    print 'Enter title: '
-    title = gets.chomp
-    puts 'Enter author: '
-    author = gets
-    book = Book.new(title, author)
+    book_data = book_input_data
+    book = Book.new(book_data[:title], book_data[:author])
     @books.push(book)
-    puts "Book #{title} created successfully."
+    puts "Book \"#{book.title}\" created successfully."
   end
 
   def list_all_books
