@@ -46,7 +46,7 @@ class App
   def create_person
     print 'To create a student, press 1, to create a teacher, press 2 : '
     option = gets.chomp
-    
+
     print 'Enter age: '
     age = gets.chomp.to_i
     print 'Enter name: '
@@ -65,9 +65,7 @@ class App
   def create_student(age, name)
     print 'Has parent permission? [Y/N]: '
     parent_permission = gets.chomp.downcase
-    permission = if parent_permission == 'y' then true 
-                else false
-                end
+    permission = parent_permission == 'y'
     student = Student.new(age, name, parent_permission: permission)
     @people << student
     puts 'Student created successfully'
