@@ -6,6 +6,8 @@ require_relative 'teacher'
 require_relative 'rental'
 require_relative 'command_option'
 require_relative 'console_ui'
+require_relative 'preserve_data'
+require 'json'
 
 class App
   include ConsoleUI
@@ -32,6 +34,9 @@ class App
     elsif input.to_i == @command_options.length + 1
       puts 'Thank You for using my School Library!'
       puts 'Built with 💖 from Anny!'
+      preserve_data = PreserveData.new
+      preserve_data.persist_data(@books, @people, @rentals)
+      puts 'Thank You for using my School Library! Your data is stored.'
       exit
     else
       puts "Please enter a number between 1 and #{@command_options.length + 1}."
@@ -60,19 +65,20 @@ class App
 
   def create_student(age, name, permission)
     student = Student.new(age, name, parent_permission: permission)
-    @people << student
+    @people << JSON.generate(student)
     puts 'Student created successfully'
   end
 
   def create_teacher(age, name, specialization)
     teacher = Teacher.new(age, name, specialization)
-    @people << teacher
+    @people << JSON.generate(teacher)
     puts 'Teacher created successfully'
   end
 
   def list_all_people
     puts 'Database is empty! Add a person.' if @people.empty?
     @people.each do |person|
+      person = JSON.parse(person, create_additions: true)
       puts "[#{person.class.name}] Age: #{person.age}, Name: #{person.name}
       id: #{person.id}"
     end
@@ -81,13 +87,16 @@ class App
   def create_book
     book_data = book_input_data
     book = Book.new(book_data[:title], book_data[:author])
-    @books.push(book)
+    @books.push(JSON.generate(book))
     puts "Book \"#{book.title}\" created successfully."
   end
 
   def list_all_books
     puts 'Database is empty! Add a book.' if @books.empty?
-    @books.each { |book| puts "[Book] Title: #{book.title}, Author: #{book.author}" }
+    @books.each do |book|
+      book = JSON.parse(book, create_additions: true)
+      puts "[Book] Title: #{book.title}, Author: #{book.author}"
+    end
   end
 
   def create_rental
@@ -97,7 +106,7 @@ class App
       @people[rental_data[:person_id]],
       @books[rental_data[:book_id]]
     )
-    @rentals << rental
+    @rentals << JSON.generate(rental)
 
     puts 'Rental created successfully'
   end
@@ -108,7 +117,13 @@ class App
 
     puts 'Rented Books:'
     @rentals.each do |rental|
-      puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}" if rental.person.id == id
+      rental = JSON.parse(rental, create_additions: true)
+      if rental.person.id == id
+        puts "Date: #{rental.date},
+          Book '#{rental.book.title}'
+          by #{rental.book.author}"
+      end
+      next
     end
   end
 end
