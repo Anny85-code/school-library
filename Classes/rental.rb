@@ -7,10 +7,10 @@ class Rental
   def initialize(date, person, book)
     @date = date
 
-    @person = JSON.parse(person, create_additions: true)
+    @person = person
     @person.rentals << JSON.generate(self)
 
-    @book = JSON.parse(book, create_additions: true)
+    @book = book
     @book.rentals << JSON.generate(self)
   end
 

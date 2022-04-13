@@ -10,13 +10,14 @@ require_relative 'preserve_data'
 require 'json'
 
 class App
+  include PreserveData
   include ConsoleUI
   attr_accessor :command_options
 
   def initialize
-    @books = []
-    @people = []
-    @rentals = []
+    @books = retrieve_data('books')
+    @people = retrieve_data('people')
+    @rentals = retrieve_data('rentals')
     @command_options = CommandOption.new.options
   end
 
@@ -32,11 +33,9 @@ class App
     if input.to_i >= 1 && input.to_i <= @command_options.length
       send(@command_options[input.to_i - 1][1])
     elsif input.to_i == @command_options.length + 1
-      puts 'Thank You for using my School Library!'
-      puts 'Built with 💖 from Anny!'
-      preserve_data = PreserveData.new
-      preserve_data.persist_data(@books, @people, @rentals)
       puts 'Thank You for using my School Library! Your data is stored.'
+      puts 'Built with 💖 from Anny!'
+      persist_data(@books, @people, @rentals)
       exit
     else
       puts "Please enter a number between 1 and #{@command_options.length + 1}."
@@ -103,9 +102,10 @@ class App
     rental_data = rental_input_data(@books, @people)
     rental = Rental.new(
       rental_data[:date],
-      @people[rental_data[:person_id]],
-      @books[rental_data[:book_id]]
+      JSON.generate(@people[rental_data[:person_id]]),
+      JSON.generate(@books[rental_data[:book_id]])
     )
+    
     @rentals << JSON.generate(rental)
 
     puts 'Rental created successfully'
@@ -118,10 +118,12 @@ class App
     puts 'Rented Books:'
     @rentals.each do |rental|
       rental = JSON.parse(rental, create_additions: true)
-      if rental.person.id == id
+      book = JSON.parse(rental.book, create_additions: true)
+      person = JSON.parse(rental.person, create_additions: true)
+      if person.id == id
         puts "Date: #{rental.date},
-          Book '#{rental.book.title}'
-          by #{rental.book.author}"
+          Book '#{book.title}'
+          by #{book.author}"
       end
       next
     end
