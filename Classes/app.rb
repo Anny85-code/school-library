@@ -31,6 +31,7 @@ class App
       send(@command_options[input.to_i - 1][1])
     elsif input.to_i == @command_options.length + 1
       puts 'Thank You for using my School Library!'
+      puts 'Built with 💖 from Anny!'
       exit
     else
       puts "Please enter a number between 1 and #{@command_options.length + 1}."
@@ -102,7 +103,7 @@ class App
   end
 
   def list_all_rentals
-    print 'To see person rentals enter the person ID: '
+    print 'To see person rentals enter the person\'s ID: '
     id = gets.chomp.to_i
 
     puts 'Rented Books:'
