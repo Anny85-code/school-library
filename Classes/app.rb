@@ -6,6 +6,7 @@ require_relative 'teacher'
 require_relative 'rental'
 require_relative 'command_option'
 require_relative 'console_ui'
+require_relative 'preserve_data'
 
 class App
   include ConsoleUI
@@ -30,7 +31,9 @@ class App
     if input.to_i >= 1 && input.to_i <= @command_options.length
       send(@command_options[input.to_i - 1][1])
     elsif input.to_i == @command_options.length + 1
-      puts 'Thank You for using my School Library!'
+      preserve_data = PreserveData.new
+      preserve_data.persist_data(@books, @people, @rentals)
+      puts 'Thank You for using my School Library! Your data is stored.'
       exit
     else
       puts "Please enter a number between 1 and #{@command_options.length + 1}."
