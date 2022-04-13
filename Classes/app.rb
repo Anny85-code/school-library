@@ -110,7 +110,6 @@ class App
   end
 
   def list_all_rentals
-
     list_all_people
 
     print 'To see person rentals enter the person\'s ID: '
@@ -118,9 +117,7 @@ class App
 
     puts 'Rented Books:'
     @rentals.each do |rental|
-      if rental.person.id == id
-        puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
-      end
+      puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}" if rental.person.id == id
       next
     end
   end
