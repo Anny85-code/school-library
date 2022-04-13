@@ -8,10 +8,10 @@ class Rental
     @date = date
 
     @person = person
-    @person.rentals << JSON.generate(self)
+    @person.rentals << self
 
     @book = book
-    @book.rentals << JSON.generate(self)
+    @book.rentals << self
   end
 
   def to_json(*args)

@@ -33,19 +33,15 @@ module ConsoleUI
   def rental_input_data(books, people)
     puts 'Select which book you want to rent by entering its number'
     books.each_with_index do |book, index|
-      book_object = JSON.parse(book, create_additions: true)
-      puts "#{index}) Title: #{book_object.title}, Author: #{book_object.author}"
+      puts "#{index}) Title: #{book.title}, Author: #{book.author}"
     end
 
     book_id = gets.chomp.to_i
 
     puts 'Select a person from the list by its number'
     people.each_with_index do |person, index|
-      person_object = JSON.parse(person, create_additions: true)
-      puts "#{index}) [#{person_object.class.name}]
-        Name: #{person_object.name},
-        ID: #{person_object.id},
-        Age: #{person_object.age}"
+      puts "#{index}) [#{person.class.name}]
+        Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
 
     person_id = gets.chomp.to_i

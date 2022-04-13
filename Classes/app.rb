@@ -34,7 +34,7 @@ class App
       send(@command_options[input.to_i - 1][1])
     elsif input.to_i == @command_options.length + 1
       puts 'Thank You for using my School Library! Your data is stored.'
-      puts 'Built with 💖 from Anny!'
+      puts 'Built with 💖 by Anny, Tekle and Angel'
       persist_data(@books, @people, @rentals)
       exit
     else
@@ -64,20 +64,19 @@ class App
 
   def create_student(age, name, permission)
     student = Student.new(age, name, parent_permission: permission)
-    @people << JSON.generate(student)
+    @people << student
     puts 'Student created successfully'
   end
 
   def create_teacher(age, name, specialization)
     teacher = Teacher.new(age, name, specialization)
-    @people << JSON.generate(teacher)
+    @people << teacher
     puts 'Teacher created successfully'
   end
 
   def list_all_people
     puts 'Database is empty! Add a person.' if @people.empty?
     @people.each do |person|
-      person = JSON.parse(person, create_additions: true)
       puts "[#{person.class.name}] Age: #{person.age}, Name: #{person.name}
       id: #{person.id}"
     end
@@ -86,14 +85,13 @@ class App
   def create_book
     book_data = book_input_data
     book = Book.new(book_data[:title], book_data[:author])
-    @books.push(JSON.generate(book))
+    @books.push(book)
     puts "Book \"#{book.title}\" created successfully."
   end
 
   def list_all_books
     puts 'Database is empty! Add a book.' if @books.empty?
     @books.each do |book|
-      book = JSON.parse(book, create_additions: true)
       puts "[Book] Title: #{book.title}, Author: #{book.author}"
     end
   end
@@ -102,28 +100,26 @@ class App
     rental_data = rental_input_data(@books, @people)
     rental = Rental.new(
       rental_data[:date],
-      JSON.generate(@people[rental_data[:person_id]]),
-      JSON.generate(@books[rental_data[:book_id]])
+      @people[rental_data[:person_id]],
+      @books[rental_data[:book_id]]
     )
-    
-    @rentals << JSON.generate(rental)
+
+    @rentals << rental
 
     puts 'Rental created successfully'
   end
 
   def list_all_rentals
+
+    list_all_people
+
     print 'To see person rentals enter the person\'s ID: '
     id = gets.chomp.to_i
 
     puts 'Rented Books:'
     @rentals.each do |rental|
-      rental = JSON.parse(rental, create_additions: true)
-      book = JSON.parse(rental.book, create_additions: true)
-      person = JSON.parse(rental.person, create_additions: true)
-      if person.id == id
-        puts "Date: #{rental.date},
-          Book '#{book.title}'
-          by #{book.author}"
+      if rental.person.id == id
+        puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
       end
       next
     end

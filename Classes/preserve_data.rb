@@ -9,34 +9,19 @@ module PreserveData
   end
 
   def retrieve_data(path)
+    return [] unless File.exist?("./data/#{path}.json")
+
     read_file("./data/#{path}.json")
   end
 
   private
 
   def read_file(file_name)
-    array = []
-    return array unless File.exist?(file_name)
-
-    File.foreach(file_name) do |line|
-      line = line[0...-2] if line[-2] == ','
-      array.push(line) if line.length > 2
-    end
-    array
+    file_data = File.read(file_name)
+    JSON.parse(file_data, create_additions: true)
   end
 
-
   def save_files(items, file_name)
-    File.write("#{file_name}.json", "[\n")
-    File.open("#{file_name}.json", 'a') do |file|
-      items.each_with_index do |item, index|
-        if index < items.length - 1
-          file.write "#{item},\n"
-        else
-          file.write "#{item}\n"
-        end
-      end
-    end
-    File.open("#{file_name}.json", 'a') { |file| file.write ']' }
+    File.write("#{file_name}.json", JSON[items])
   end
 end
