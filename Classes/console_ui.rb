@@ -7,7 +7,6 @@ module ConsoleUI
     age = gets.chomp.to_i
     print 'Enter name: '
     name = gets.chomp
-    puts option
     case option
     when 1
       print 'Has parent permission? [Y/N]: '
@@ -33,13 +32,16 @@ module ConsoleUI
 
   def rental_input_data(books, people)
     puts 'Select which book you want to rent by entering its number'
-    books.each_with_index { |book, index| puts "#{index}) Title: #{book.title}, Author: #{book.author}" }
+    books.each_with_index do |book, index|
+      puts "#{index}) Title: #{book.title}, Author: #{book.author}"
+    end
 
     book_id = gets.chomp.to_i
 
     puts 'Select a person from the list by its number'
     people.each_with_index do |person, index|
-      puts "#{index}) [#{person.class.name}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      puts "#{index}) [#{person.class.name}]
+        Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
 
     person_id = gets.chomp.to_i

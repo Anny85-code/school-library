@@ -6,15 +6,18 @@ require_relative 'teacher'
 require_relative 'rental'
 require_relative 'command_option'
 require_relative 'console_ui'
+require_relative 'preserve_data'
+require 'json'
 
 class App
+  include PreserveData
   include ConsoleUI
   attr_accessor :command_options
 
   def initialize
-    @books = []
-    @people = []
-    @rentals = []
+    @books = retrieve_data('books')
+    @people = retrieve_data('people')
+    @rentals = retrieve_data('rentals')
     @command_options = CommandOption.new.options
   end
 
@@ -30,7 +33,9 @@ class App
     if input.to_i >= 1 && input.to_i <= @command_options.length
       send(@command_options[input.to_i - 1][1])
     elsif input.to_i == @command_options.length + 1
-      puts 'Thank You for using my School Library!'
+      puts 'Thank You for using my School Library! Your data is stored.'
+      puts 'Built with 💖 by Anny, Tekle and Angel'
+      persist_data(@books, @people, @rentals)
       exit
     else
       puts "Please enter a number between 1 and #{@command_options.length + 1}."
@@ -86,7 +91,9 @@ class App
 
   def list_all_books
     puts 'Database is empty! Add a book.' if @books.empty?
-    @books.each { |book| puts "[Book] Title: #{book.title}, Author: #{book.author}" }
+    @books.each do |book|
+      puts "[Book] Title: #{book.title}, Author: #{book.author}"
+    end
   end
 
   def create_rental
@@ -96,18 +103,22 @@ class App
       @people[rental_data[:person_id]],
       @books[rental_data[:book_id]]
     )
+
     @rentals << rental
 
     puts 'Rental created successfully'
   end
 
   def list_all_rentals
-    print 'To see person rentals enter the person ID: '
+    list_all_people
+
+    print 'To see person rentals enter the person\'s ID: '
     id = gets.chomp.to_i
 
     puts 'Rented Books:'
     @rentals.each do |rental|
       puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}" if rental.person.id == id
+      next
     end
   end
 end
