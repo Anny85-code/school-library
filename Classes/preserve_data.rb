@@ -15,9 +15,9 @@ class PreserveData
     File.open("#{file_name}.json", 'a') do |file|
       items.each_with_index do |item, index|
         if index < items.length - 1
-          file.write "#{JSON.generate(item)},\n"
+          file.write "#{item},\n"
         else
-          file.write "#{JSON.generate(item)}\n"
+          file.write "#{item}\n"
         end
       end
     end
