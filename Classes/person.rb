@@ -6,8 +6,12 @@ class Person < Nameable
   attr_accessor :name, :age, :rentals
   attr_reader :id
 
-  def initialize(age, name = 'Unknown', parent_permission: true)
-    @id = Random.rand(1..1000)
+  def initialize(age, name = 'Unknown', id = -1, parent_permission: true)
+    @id = if id == -1
+            Random.rand(1..1000)
+          else
+            id
+          end
     @name = name
     @age = age
     @parent_permission = parent_permission
@@ -30,7 +34,8 @@ class Person < Nameable
       'person' => {
         'age' => @age,
         'name' => @name,
-        'parent_permission' => @parent_permission
+        'parent_permission' => @parent_permission,
+        'id' => @id
       }
     }.to_json(*args)
   end
