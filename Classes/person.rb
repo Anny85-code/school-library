@@ -3,7 +3,7 @@ require_relative 'rental'
 require 'date'
 
 class Person < Nameable
-  attr_accessor :name, :age, :rentals
+  attr_accessor :name, :age, :rentals, :parent_permission
   attr_reader :id
 
   def initialize(age, name = 'Unknown', id = -1, parent_permission: true)
@@ -15,13 +15,13 @@ class Person < Nameable
     @name = name
     @age = age
     @parent_permission = parent_permission
-    @date = DateTime.now
     @rentals = []
     super()
   end
 
-  def add_rental=(person)
-    Rental.new(@date, person, self)
+  def add_rental(book)
+    date = Time.now.strftime('%Y-%m-%d')
+    Rental.new(date, self, book)
   end
 
   def of_age?

@@ -10,7 +10,7 @@ describe Book do
       expect(book.author).to eq 'Chloe'
     end
   end
-  context 'when calling add_rental= method' do
+  context 'when calling add_rental method' do
     it 'with person object should create a rental' do
       book = Book.new('Alchemist', 'Chloe')
       person = Person.new(17, 'John', parent_permission: true)
